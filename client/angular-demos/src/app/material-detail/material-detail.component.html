@@ -1,0 +1,107 @@
+
+
+<flex-row>
+  <!-- left: details -->
+  <flex-col [style.width.px]="ui.modalLaneWidthPX">
+
+    <form class="example-form">
+      <flex-col>
+
+      <mat-form-field class="example-full-width">
+          <input (change)="material.name = $event.target.value" class="nameInput" matInput placeholder="Material Name" value="{{ material.name }}">
+      </mat-form-field>
+
+        <flex-row style="width: 100%;">
+            <mat-form-field class="demo-chip-list" style="width: 100%;">
+                <mat-chip-list #chipList>
+                  <mat-chip *ngFor="let tag of material.tags" [selectable]="selectable"
+                           [removable]="removable" (remove)="remove(tag)">
+                    {{ tag }}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                  </mat-chip>
+                  <input placeholder="Tags"
+                         [matChipInputFor]="chipList"
+                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                         [matChipInputAddOnBlur]="addOnBlur"
+                         (matChipInputTokenEnd)="add($event)" />
+                </mat-chip-list>
+              </mat-form-field>
+        </flex-row>
+
+        <mat-form-field class="example-full-width">
+          <textarea matInput matTextareaAutosize placeholder="Description" [value]="material.description" (change)="setAttribute('description', $event.target.value)"></textarea>
+        </mat-form-field>
+
+
+          <mat-form-field class="example-full-width">
+            <input class="" matInput placeholder="Article ID" value="{{ material.articleID }}" (change)="setAttribute('articleID', $event.target.value)">
+          </mat-form-field>
+
+          <mat-form-field>
+              <mat-select placeholder="Customer" [(value)]="material.customer" (change)="setAttribute('customer', $event.value)" >
+                <mat-option *ngFor="let customer of state.materials.customers" [value]="customer" >
+                  {{ customer }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-select placeholder="State" [(value)]="material.state" (change)="setAttribute('state', $event.value)">
+                  <mat-option *ngFor="let state of state.materials.states" [value]="state">
+                    {{ state }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="example-full-width">
+                  <input class="" disabled matInput placeholder="Material ID" value="{{ material.id }}">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput disabled [matDatepicker]="picker" placeholder="Created" [value]="material.created">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                      <input matInput disabled [matDatepicker]="picker2" placeholder="Updated" [value]="material.updated">
+                      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+
+  
+
+      </flex-col>
+      </form>
+    
+  </flex-col>
+
+  <flex-col
+    [style.width.px]="ui.modalGutterPX"
+  >&nbsp;</flex-col>
+
+  <!-- right: images -->
+  <flex-col [style.width.px]="ui.modalLaneWidthPX">
+      <div [style.height.px]="ui.modalLaneWidthPX" [style.width.px]="ui.modalLaneWidthPX" style="background: #333;">
+        <img [src]="material.imageURL ? material.imageURL + '&w=' + ui.modalLaneWidthPX : 'https://picsum.photos/550'" />
+      </div>
+
+      
+      <flex-row style="flex-wrap: wrap; justify-content: space-between; margin-top: 20px;">
+          <img *ngFor="let i of ui.materialDetailModal.thumbCount"
+          [src]="material.imageURL+'&w=80&h=80'" [style.width.px]="80" [style.height.px]="80" style="margin-bottom: 10px;"/>
+      </flex-row>
+      
+
+  </flex-col>
+
+</flex-row>
+
+<flex-row>
+ 
+
+  <button style="width: 100%; margin-top: 30px; font-size: 20px; padding: 20px 0; margin-bottom: 40px;"
+   mat-raised-button color="primary" (click)="backend.saveMaterial(material)">Save Changes</button>
+</flex-row>
+
+

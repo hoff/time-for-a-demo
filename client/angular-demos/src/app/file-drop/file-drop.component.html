@@ -1,0 +1,16 @@
+
+<!-- drag / click area -->
+<flex-col-center-center 
+(dragover)="onDragOver($event)"
+(drop)="onDrop($event)"
+(click)="clickFileinput()"
+[style.width.px]="size"
+[style.height.px]="size"
+style="background-color: #333; color:red; font-size: 80px; font-weight: bold; margin-right: 20px;">
+
++
+
+<!-- hidden standard file input (because it's not pretty, we simulate a click on it) -->
+<input style="width:0; height:0;" (change)="fileinputChange($event)" type="file" multiple="multiple" name="fileinput"  id="fileinput" #fileinput />
+
+</flex-col-center-center>
