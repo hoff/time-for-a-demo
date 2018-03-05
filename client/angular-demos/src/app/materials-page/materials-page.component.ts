@@ -1,13 +1,7 @@
 // ng
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations'
+import { trigger, state, style, animate, transition } from '@angular/animations'
 
 // rx
 import 'rxjs/add/operator/filter'
@@ -97,6 +91,7 @@ export class MaterialsPageComponent implements OnInit {
 
   applyFilter(filter: string) {
     this.backend.materials = []
+    this.backend.firstPageLoaded = false
     this.state.materials.filter = filter
     this.backend.loadMaterialsPage(this.state.materials.filter)
   }

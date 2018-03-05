@@ -26,6 +26,11 @@ html, body {
 inline-block {
 	display: inline-block;
 }
+relative-block {
+	display: block;
+	position: relative;
+}
+
 .filter-label {
 	font-size: 14px;
 	color: gray;

@@ -1,58 +1,45 @@
 <!-- filters -->
 <flex-row-center style="width: 100%; align-items: center; padding-top: 10px;">
   <flex-row [style.max-width.px]="ui.contentWidthPX" style="width: 100%;">
-
-      <inline-block class="filter-label" (click)="applyFilter('All')" [class.selected]="state.materials.filter=='All'">All</inline-block>
-      <inline-block class="filter-label" (click)="applyFilter('New')" [class.selected]="state.materials.filter=='New'">New</inline-block>
-      <inline-block class="filter-label" (click)="applyFilter('Scanning')" [class.selected]="state.materials.filter=='Scanning'">Scanning</inline-block>
-      <inline-block class="filter-label" (click)="applyFilter('Image Processing')" [class.selected]="state.materials.filter=='Image Processing'">Image Processing</inline-block>
-      <inline-block class="filter-label" (click)="applyFilter('Shading')" [class.selected]="state.materials.filter=='Shading'">Shading</inline-block>
-      <inline-block class="filter-label" (click)="applyFilter('Completed')" [class.selected]="state.materials.filter=='Completed'">Completed</inline-block> 
-    
-    </flex-row>
-  </flex-row-center>
+    <inline-block class="filter-label" (click)="applyFilter('All')" [class.selected]="state.materials.filter=='All'">All</inline-block>
+    <inline-block class="filter-label" (click)="applyFilter('New')" [class.selected]="state.materials.filter=='New'">New</inline-block>
+    <inline-block class="filter-label" (click)="applyFilter('Scanning')" [class.selected]="state.materials.filter=='Scanning'">Scanning</inline-block>
+    <inline-block class="filter-label" (click)="applyFilter('Image Processing')" [class.selected]="state.materials.filter=='Image Processing'">Image Processing</inline-block>
+    <inline-block class="filter-label" (click)="applyFilter('Shading')" [class.selected]="state.materials.filter=='Shading'">Shading</inline-block>
+    <inline-block class="filter-label" (click)="applyFilter('Completed')" [class.selected]="state.materials.filter=='Completed'">Completed</inline-block> 
+  </flex-row>
+</flex-row-center>
 
 
 <div style="padding-top: 40px;">
- <!--  <button (click)="backend.createMaterial({name: 'test'})">create!</button> -->
-
-  <flex-row-center>
-
-    <div [style.max-width.px]="ui.contentWidthPX" style="width: 100%;">
-
-  <div class="row">
-
-      <!-- a material card -->
-      <div *ngFor="let material of backend.materials" (click)="selectMaterial(material)"
+ 
+  <app-content-width>
+    <div class="row">
+      <!-- A material card -->
+      <div *ngFor="let material of backend.materials" 
+        (click)="selectMaterial(material)"
         class="material-card col-xs-12 col-sm-6 col-md-4 col-lg-3">
           <div class="box">
-
               <mat-card class="example-card" >
                   <mat-card-content>
-                      <div style="position:relative;">
+                      <relative-block>
                         <img mat-card-image [src]="material.imageURL" alt="Photo of {{ material.name }}">
                         <flex-row style="position:absolute; left: 0; bottom:30px; z-index:2;">
                             <mat-chip-list>
                                 <mat-chip *ngFor="let tag of material.tags">{{ tag }}</mat-chip>
                               </mat-chip-list>
                         </flex-row>
-                      </div>
-                      
-                      <flex-row-center style="font-size: 16px;">
-                        {{ material.name }}
-                      </flex-row-center>
-                    </mat-card-content>
+                      </relative-block>
+                      <flex-row-center style="font-size: 16px;">{{ material.name }}</flex-row-center>
+                  </mat-card-content>
               </mat-card>
-
           </div>
       </div>
   </div>
+</app-content-width>
 
-</div>
-</flex-row-center>
-
-<!-- more ? {{ backend.moreMaterials }} -->
-<button #nextButton [style.display]="backend.moreMaterials ? 'none' : 'none'" (click)="backend.loadNextMaterials()">load more!</button>
+<!-- show only for demo -->
+<button #nextButton [style.display]="backend.moreMaterials ? 'none' : 'none'" (click)="backend.loadMaterialsPage(backend.nextMaterialsCursor)">load more!</button>
 
 </div>
 
