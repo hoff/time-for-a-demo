@@ -60,6 +60,7 @@ export class BackendService {
   }
 
   saveMaterial(material) {
+    console.log('save!')
     this.http.post(this.apiURL + 'materials', {
       id: material.id,
       name: material.name,

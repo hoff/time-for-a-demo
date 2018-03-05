@@ -1,35 +1,35 @@
-<!-- header --> 
-<flex-row-center style="box-shadow: 0px 4px 5px -1px rgba(0,0,0,0.75); margin-bottom:3px; background-color: #3e454d; padding: 10px 0px; align-items: center; width: 100vw;">
-    
-    <flex-row [style.max-width.px]="ui.contentWidthPX" style="width: 100%; align-items: center;">
-      <img src="/assets/colormass-logo-cm.png" [routerLink]="['/']" height="30" alt="color mass logo" style="outline: none; cursor: pointer; margin-right: 30px;">
-      <div class="nav-item" [routerLink]="['models']" routerLinkActive="active">Models</div>
-      <div class="nav-item" [routerLink]="['materials', 'list']" routerLinkActive="active">Materials</div>
-      <div class="nav-item" [routerLink]="['images']" routerLinkActive="active">Images</div>
-      <div class="nav-item" [routerLink]="['users']" routerLinkActive="active">Users</div>
-      <div class="nav-item" [routerLink]="['customers']" routerLinkActive="active">Customers</div>
-      <div class="nav-item" [routerLink]="['tags']" routerLinkActive="active">Tags</div>
-
-    </flex-row>
-</flex-row-center>  
-
-<!-- content -->
-<div style="min-height: 100vh; margin-top: 0px; background-color: white; background-image: url('/assets/bg-scribble-light.png');">
-    <!-- router outlet -->
-    <router-outlet></router-outlet>
-</div>
-  
-<div *ngIf="backend.materialsLoading" style="position: fixed; top: 0; left: 0; width: 100%;">
+<!-- loading indicator -->
+<div *ngIf="backend.materialsLoading" class="cm-loading-indicator">
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
-  
- 
+
+<!-- header --> 
+<flex-row class="cm-header-bar">
+    <app-content-width>
+        <flex-row-start-center>
+            <img class="cm-header-logo" src="/assets/colormass-logo-cm.png" [routerLink]="['/']" height="30" alt="color|mass logo" >
+            <div class="cm-nav-item" [routerLink]="['models']" routerLinkActive="active">Models</div>
+            <div class="cm-nav-item" [routerLink]="['materials', 'list']" routerLinkActive="active">Materials</div>
+            <div class="cm-nav-item" [routerLink]="['images']" routerLinkActive="active">Images</div>
+            <div class="cm-nav-item" [routerLink]="['users']" routerLinkActive="active">Users</div>
+            <div class="cm-nav-item" [routerLink]="['customers']" routerLinkActive="active">Customers</div>
+            <div class="cm-nav-item" [routerLink]="['tags']" routerLinkActive="active">Tags</div>
+          </flex-row-start-center>
+    </app-content-width>
+</flex-row>
+
+<!-- content via router outlet-->
+<div class="cm-content-area">
+    <router-outlet></router-outlet>
+</div>
+
 <!-- media bar -->
-<flex-row style="z-index: 3; background: white; position: fixed; bottom: 0; left: 0; width: 100vw; height: 200px; padding: 30px; overflow-x: scroll;" [style.display]="mediaBar ? 'flex' : 'none'">
+<flex-row class="cm-media-bar" [style.display]="mediaBar ? 'flex' : 'none'">
   <app-file-drop [size]="200"></app-file-drop>
-  <img *ngFor="let image of backend.images" [src]="image.url + '&w=200&h=200'" 
-    (click)="ui.boardcastImageClick(image.url)"
-    style="width: 200px; margin-right: 20px;"
+  <img 
+    *ngFor="let image of backend.images" 
+    [src]="image.url + '&w=200&h=200'" 
+    (click)="ui.boardcastImageClick(image.url)" 
   />
 </flex-row>
 

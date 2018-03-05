@@ -17,6 +17,7 @@ export class UIService {
   }
 
   contentWidthPX = 1200
+  contentPaddingPX = 20
   modalWidthPX = 1000
   modalPaddingPX = 50
   modalGutterPX = this.modalPaddingPX

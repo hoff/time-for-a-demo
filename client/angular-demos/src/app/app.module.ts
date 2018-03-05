@@ -37,7 +37,9 @@ import { TagsPageComponent } from './tags-page/tags-page.component';
 import { AppComponent } from './app.component'
 import { ContentWidthComponent } from './content-width/content-width.component'
 import { MaterialDetailComponent } from './material-detail/material-detail.component'
-import { FileDropComponent } from './file-drop/file-drop.component'
+import { FileDropComponent } from './file-drop/file-drop.component';
+import { ModalOverlayComponent } from './modal-overlay/modal-overlay.component';
+import { ResponsiveCardComponent } from './responsive-card/responsive-card.component'
 
 // routes
 const appRoutes: Routes = [
@@ -63,6 +65,8 @@ const appRoutes: Routes = [
     CustomersPageComponent,
     TagsPageComponent,
     ContentWidthComponent,
+    ModalOverlayComponent,
+    ResponsiveCardComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

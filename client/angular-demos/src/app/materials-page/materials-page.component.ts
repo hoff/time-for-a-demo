@@ -1,7 +1,6 @@
 // ng
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
-import { trigger, state, style, animate, transition } from '@angular/animations'
 
 // rx
 import 'rxjs/add/operator/filter'
@@ -17,17 +16,6 @@ import { Material } from '../interfaces'
   selector: 'app-materials-page',
   templateUrl: './materials-page.component.html',
   styleUrls: ['./materials-page.component.css'],
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-          style({ opacity: 0.5 }),
-          animate(150, style({ opacity: 1, transform: 'scale(1)' }))
-      ]),
-      transition(':leave', [
-          animate(50, style({ opacity: 0.3, transform: 'scale(1)' }))
-      ])
-  ]),
-  ]
 })
 export class MaterialsPageComponent implements OnInit {
 
@@ -91,6 +79,7 @@ export class MaterialsPageComponent implements OnInit {
 
   applyFilter(filter: string) {
     this.backend.materials = []
+    this.backend.nextMaterialsCursor = ''
     this.backend.firstPageLoaded = false
     this.state.materials.filter = filter
     this.backend.loadMaterialsPage(this.state.materials.filter)

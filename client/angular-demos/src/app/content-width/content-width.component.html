@@ -1,5 +1,10 @@
-<flex-row-center>
-    <div style="width: 100%;" [style.max-width.px]="ui.contentWidthPX">
+<flex-row-center [style.width.%]="100">
+    <div
+      [style.width.%]="100"
+      [style.max-width.px]="ui.contentWidthPX"
+      [style.margin-left.px]="ui.contentPaddingPX"
+      [style.margin-right.px]="ui.contentPaddingPX"
+      >
         <ng-content></ng-content>
     </div>
 </flex-row-center>
