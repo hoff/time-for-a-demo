@@ -4,4 +4,5 @@ export const environment = {
   backendHost: 'https://time-for-a-demo.appspot.com',
   backendDelay: 0,
   public: true,
+  assetsURL: '/angular/assets/',
 };

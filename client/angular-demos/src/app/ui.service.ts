@@ -27,6 +27,8 @@ export class UIService {
     this.registerShortcuts()
   }
 
+  
+
   registerShortcuts() {
     Observable.fromEvent(window, 'keydown').subscribe((event: KeyboardEvent) => {
       // console.log(event.keyCode)

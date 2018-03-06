@@ -16,24 +16,33 @@
       <!-- a material card for each result -->
       <app-responsive-card 
         *ngFor="let material of backend.materials" 
-        class="material-card col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        class="cm-material-card col-xs-12 col-sm-6 col-md-4 col-lg-3"
         (click)="selectMaterial(material)"
-        >
-          <relative-block>
-              <img mat-card-image [src]="material.imageURL" alt="Photo of {{ material.name }}">
-              <flex-row class="cm-material-card-tags">
-                  <mat-chip-list>
-                    <mat-chip *ngFor="let tag of material.tags">{{ tag }}</mat-chip>
-                  </mat-chip-list>
-              </flex-row>
-            </relative-block>
-            <flex-row-center class="cm-material-card-name">{{ material.name }}</flex-row-center>
+      >
+        <relative-block>
+            <img class="cm-card-image" mat-card-image [src]="material.imageURL ? material.imageURL + '&w=300&h=300' : backend.placeholderImg()" alt="Photo of {{ material.name }}">
+            <flex-row class="cm-material-card-tags">
+                <mat-chip-list>
+                  <mat-chip *ngFor="let tag of material.tags">{{ tag }}</mat-chip>
+                </mat-chip-list>
+            </flex-row>
+          </relative-block>
+          <flex-row-center class="cm-material-card-name">{{ material.name }}</flex-row-center>
       </app-responsive-card>
   </div>
 </app-content-width>
 
 <!-- load more button -->
-<button #nextButton [style.display]="backend.moreMaterials ? 'none' : 'none'" (click)="backend.loadMaterialsPage(backend.nextMaterialsCursor)">load more!</button>
+<flex-row-center>
+  <button #nextButton [style.display]="!backend.materialsLoading && backend.moreMaterials && !state.flags.infinityScroll ? 'block' : 'none'" (click)="backend.loadMaterialsPage(this.state.materials.filter)">load more materials</button>
+</flex-row-center>
+
+<!-- add material button -->
+<div style="position: fixed; bottom: 20px; right: 20px;">
+    <button mat-fab color="primary" (click)="startMaterial()">
+        <span style="font-size: 40px; color: white;">+</span>
+    </button>
+</div>
 
 <!-- material detail inside modal overlay -->
 <app-modal-overlay *ngIf="selectedMaterial" (close)="closeModal()">

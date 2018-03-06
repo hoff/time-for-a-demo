@@ -5,6 +5,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import 'rxjs/add/operator/filter'
 
 // app
+import { environment } from '../environments/environment'
 import { BackendService } from './backend.service'
 import { UIService } from './ui.service'
 
@@ -17,11 +18,13 @@ import { UIService } from './ui.service'
 export class AppComponent implements OnInit {
 
   mediaBar = false
+  environment
 
   constructor(
     public backend: BackendService,
     public ui: UIService,
   ) {
+    this.environment = environment
     this.ui.shortcutStream.filter(val => val === 'm').subscribe(() => {
       this.mediaBar = !this.mediaBar
     })

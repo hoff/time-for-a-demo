@@ -17,7 +17,6 @@ relative-block {
 	display: block;
 	position: relative;
 }
-
 flex-row {
 	display: flex;
 	width: 100%;
@@ -59,10 +58,16 @@ flex-col-center-center {
 .cm-nav-item.active {
 	color: white;
 }
-
-.material-card {
+.cm-material-card {
 	margin-bottom: 30px;
 	cursor: pointer;
+}
+.cm-material-card:hover {
+	transform: scale(1.02);
+}
+.cm-card-image {
+	transform: scale(1);
+	transition: all 0.3s;
 }
 
 .filter-label {
@@ -72,31 +77,28 @@ flex-col-center-center {
 	cursor: pointer;
 }
 .filter-label.selected {
-	border-bottom: 2px solid blue;
-	color: #333;
+	border-bottom: 1px solid #8bacdc;
+	color: #8bacdc;
 }
-
 .cm-content-area {
 	min-height: 100vh;
 	margin-top: 0px;
 	background-color: white;
 	background-image: url('/assets/bg-scribble-light.png');
 }
-
 .cm-loading-indicator {
 	position: fixed; 
 	top: 0; 
 	left: 0;
 	width: 100%;
+	z-index: 5;
 }
 .cm-header-logo {
 	outline: none; cursor: pointer; margin-right: 30px;
 }
-
 .cm-header-bar {
 	box-shadow: 0px 4px 5px -1px rgba(0,0,0,0.75); margin-bottom:3px; background-color: #3e454d; padding: 10px 0px; align-items: center; width: 100vw;
 }
-
 .cm-grid-content {
 	padding-top: 40px;
 	display: block;
@@ -107,19 +109,16 @@ flex-col-center-center {
 .cm-material-card-name {
 	font-size: 16px;
 }
-
 .cm-media-bar {
 	z-index: 3; background: white; position: fixed; bottom: 0; left: 0; width: 100vw; height: 200px; padding: 30px; overflow-x: scroll;
 }
 .cm-media-bar-image {
 	width: 200px; height: 200px; margin-right: 20px;
 }
-
 input.nameInput {
 	font-weight: bold;
 	font-size: 20px;
 }
-
 .cm-modal-form {
 	width: 100%;
 }

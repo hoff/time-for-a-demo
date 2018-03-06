@@ -1,7 +1,4 @@
-# standard imports
 import webapp2, json, jinja2, os, urllib, time, re, logging, uuid
-
-# app engine apis
 from google.appengine.ext import ndb, blobstore
 from google.appengine.api import memcache, mail, images, app_identity
 from google.appengine.ext.webapp import blobstore_handlers
@@ -101,9 +98,8 @@ class MaterialsEndpoint(webapp2.RequestHandler):
         allow_cors(self)
         data = json.loads(self.request.body)
         id = data.get('id')
-        name = data.get('name')
         material = MaterialModel.get_by_id(id)
-        material.name = name
+        material.name = data.get('name')
         material.description = data.get('description')
         material.imageURL = data.get('imageURL')
         material.state = data.get('state')
@@ -117,10 +113,16 @@ class MaterialsEndpoint(webapp2.RequestHandler):
     def put(self):
         allow_cors(self)
         data = json.loads(self.request.body)
-        name = data.get('name')
         material = MaterialModel(
-            name=name
+            name = data.get('name'),
+            description = data.get('description'),
+            imageURL = data.get('imageURL'),
+            state = data.get('state'),
+            article_id = data.get('articleID'),
+            customer = data.get('customer'),
+            tags = data.get('tags')
         ).put()
+        return_json(self, material_to_object(material))
 
     def options(self):
         self.response.headers['Access-Control-Allow-Credentials'] = 'true'
@@ -251,7 +253,7 @@ def allow_cors(request):
 
 def return_json(handler, data):
     """
-    returns JSON
+    returns JSON from an object to a given request handler
     """
     handler.response.headers['Content-Type'] = 'application/json; charset=utf-8'
     handler.response.out.write(json.dumps(data))
@@ -262,11 +264,12 @@ IMAGE_UPLOAD_URL = '/api/image/upload'
 
 app = webapp2.WSGIApplication(
     [
-        # materials endpoint (GET, POST, PUT)
+        # material endpoints
         ('/api/materials', MaterialsEndpoint),
         ('/api/material', MaterialEndpoint),
+
+        # image endpoint
         ('/api/images', ImagesEndpoint),
-        
 
         # generate an upload-url
         ('/api/image/upload-url', UploadUrl),

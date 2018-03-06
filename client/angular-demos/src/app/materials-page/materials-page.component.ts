@@ -33,10 +33,12 @@ export class MaterialsPageComponent implements OnInit {
     public state: StateService,
     public ui: UIService,
   ) {
+    // infinity scroll mechanism
     window.onscroll = () => {
+      if (!state.flags.infinityScroll) { return }
       const buttonFromTop = this.nextButton.nativeElement.getBoundingClientRect().top
-      // console.log(buttonFromTop)
-      if (buttonFromTop < 800) {
+      const eagerness = window.innerHeight * 2
+      if (buttonFromTop < eagerness) {
         this.backend.loadMaterialsPage(this.state.materials.filter)
       }
     }
@@ -70,6 +72,18 @@ export class MaterialsPageComponent implements OnInit {
   selectMaterial(material: Material) {
     this.selectedMaterial = material
     this.router.navigate(['/materials', material.id])
+  }
+
+  startMaterial() {
+    this.selectedMaterial = {
+      name: '',
+      description: '',
+      imageURL: '',
+      articleID: '',
+      customer: '',
+      state: '',
+      tags: [],
+    }
   }
 
   closeModal() {

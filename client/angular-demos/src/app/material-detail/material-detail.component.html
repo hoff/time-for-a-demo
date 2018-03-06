@@ -52,24 +52,29 @@
           </mat-select>
         </mat-form-field>
 
-        <!-- material ID -->
-        <mat-form-field class="mc-overlay-formfield">
-          <input class="" disabled matInput placeholder="Material ID" value="{{ material.id }}">
-        </mat-form-field>
+        <!-- hidden for un-saved material -->
+        <div *ngIf="material.id">
 
-        <!-- created date -->
-        <mat-form-field>
-          <input matInput disabled [matDatepicker]="picker" placeholder="Created" [value]="material.created">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+          <!-- material ID -->
+          <mat-form-field class="mc-overlay-formfield">
+            <input class="" disabled matInput placeholder="Material ID" value="{{ material.id }}">
+          </mat-form-field>
 
-        <!-- updated date -->
-        <mat-form-field>
-          <input matInput disabled [matDatepicker]="picker2" placeholder="Updated" [value]="material.updated">
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
-        </mat-form-field>
+          <!-- created date -->
+          <mat-form-field>
+            <input matInput disabled [matDatepicker]="picker" placeholder="Created" [value]="material.created">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <!-- updated date -->
+          <mat-form-field>
+            <input matInput disabled [matDatepicker]="picker2" placeholder="Updated" [value]="material.updated">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+
+        </div>
 
       </flex-col>
     </form>
@@ -83,12 +88,12 @@
 
     <!-- large preview image -->
     <div [style.height.px]="ui.modalLaneWidthPX" [style.width.px]="ui.modalLaneWidthPX" style="background: #333;">
-      <img [src]="material.imageURL ? material.imageURL + '&w=' + ui.modalLaneWidthPX : 'https://picsum.photos/550'" />
+      <img [style.height.px]="ui.modalLaneWidthPX" [style.width.px]="ui.modalLaneWidthPX" [src]="material.imageURL ? material.imageURL + '&w=500&h=500': '/assets/black_placeholder.jpg'" />
     </div>
 
     <!-- image thumbnails -->
     <flex-row class="cm-modal-thumbnail-row">
-      <img *ngFor="let i of ui.materialDetailModal.thumbCount" [src]="material.imageURL+'&w=80&h=80'" [style.width.px]="80" [style.height.px]="80"
+      <img *ngFor="let i of ui.materialDetailModal.thumbCount" [src]="material.imageURL ? material.imageURL+'&w=80&h=80' : '/assets/black_placeholder.jpg'" [style.width.px]="80" [style.height.px]="80"
         style="margin-bottom: 10px;" />
     </flex-row>
 
@@ -96,6 +101,9 @@
 </flex-row>
 
 <flex-row>
-  <button class="cm-modal-button" style="width: 100%; margin-top: 30px; font-size: 20px; padding: 20px 0; margin-bottom: 40px;" mat-raised-button color="primary"
-    (click)="backend.saveMaterial(material)">Save Material</button>
+  <button *ngIf="material.id" class="cm-modal-button" style="width: 100%; margin-top: 30px; font-size: 20px; padding: 20px 0; margin-bottom: 40px; color: #555;" mat-raised-button color="white"
+    (click)="backend.saveMaterial(material)">Update Material</button>
+
+    <button *ngIf="!material.id" class="cm-modal-button" style="width: 100%; margin-top: 30px; font-size: 20px; padding: 20px 0; margin-bottom: 40px; color: #555;" mat-raised-button color="white"
+    (click)="backend.createMaterial(material)">Create Material</button>
 </flex-row>

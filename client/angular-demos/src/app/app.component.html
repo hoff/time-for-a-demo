@@ -7,7 +7,7 @@
 <flex-row class="cm-header-bar">
     <app-content-width>
         <flex-row-start-center>
-            <img class="cm-header-logo" src="/assets/colormass-logo-cm.png" [routerLink]="['/']" height="30" alt="color|mass logo" >
+            <img class="cm-header-logo" [src]="environment.production ? '/angular/assets/colormass-logo-cm.png' : '/assets/colormass-logo-cm.png'" [routerLink]="['/']" height="30" alt="color|mass logo" >
             <div class="cm-nav-item" [routerLink]="['models']" routerLinkActive="active">Models</div>
             <div class="cm-nav-item" [routerLink]="['materials', 'list']" routerLinkActive="active">Materials</div>
             <div class="cm-nav-item" [routerLink]="['images']" routerLinkActive="active">Images</div>
@@ -30,7 +30,8 @@
     *ngFor="let image of backend.images" 
     [src]="image.url + '&w=200&h=200'" 
     (click)="ui.boardcastImageClick(image.url)" 
+    style="margin-right: 20px;"
   />
 </flex-row>
 
-<!--  <button (click)="backend.createMaterial({name: 'test'})">create!</button> -->
+<!--  <button (click)="backend.createMaterial({name: 'new material'})">create!</button> -->

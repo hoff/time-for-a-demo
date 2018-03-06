@@ -14,6 +14,9 @@ import { environment } from '../environments/environment'
 @Injectable()
 export class BackendService {
 
+  environment
+  assetsURL = environment.assetsURL
+
   backendHost = environment.backendHost
   apiURL = this.backendHost + '/api/'
   backendDelay = environment.backendDelay
@@ -27,7 +30,14 @@ export class BackendService {
 
   constructor(
     public http: HttpClient
-  ) { }
+  ) {
+    this.environment = environment
+  }
+
+  // move to ui
+  placeholderImg() {
+    return this.assetsURL + 'black_placeholder.jpg'
+  }
 
   loadMaterialsPage(filter: string) {
     if (this.materialsLoading || (!this.moreMaterials && this.firstPageLoaded )) { return }
@@ -48,32 +58,22 @@ export class BackendService {
       .pipe(delay(this.backendDelay))
   }
 
-  // quick and dirty way of creating a material
-  createMaterial(options) {
-    this.http.put(this.apiURL + 'materials', {
-      name: options.name
-    })
-    .pipe(delay(this.backendDelay))
-    .subscribe((reply: any) => {
-      // nothing here:)
-    })
-  }
-
   saveMaterial(material) {
-    console.log('save!')
-    this.http.post(this.apiURL + 'materials', {
-      id: material.id,
-      name: material.name,
-      description: material.description,
-      imageURL: material.imageURL,
-      state: material.state,
-      articleID: material.articleID,
-      customer: material.customer,
-      tags: material.tags,
-    })
+    const materialData = this.materialToObject(material)
+    this.http.post(this.apiURL + 'materials', materialData)
     .pipe(delay(this.backendDelay))
     .subscribe(reply => {
       // material has been saved
+      console.log('material has been saved')
+    })
+  }
+
+  createMaterial(material) {
+    const materialData = this.materialToObject(material)
+    this.http.put(this.apiURL + 'materials', materialData)
+    .pipe(delay(this.backendDelay))
+    .subscribe((reply: any) => {
+      console.log('created material')
     })
   }
 
@@ -86,6 +86,19 @@ export class BackendService {
       })
   }
 
+  materialToObject(material) {
+    return {
+      id: material.id,
+      name: material.name,
+      description: material.description,
+      imageURL: material.imageURL,
+      state: material.state,
+      articleID: material.articleID,
+      customer: material.customer,
+      tags: material.tags,
+    }
+  }
+
   // image upload
   uploadFile(file: File): Observable<any> {
     return Observable.create(progressStream => {
@@ -96,13 +109,7 @@ export class BackendService {
       // uploads[] is how we pick things up in the backend
       formData.append('uploads[]', file, file.name)
 
-      // on progress
-      xhr.addEventListener('progress', event => {
-        const percent = Math.ceil((event.loaded / event.total) * 100)
-        progressStream.next(percent)
-      })
-
-      // listen to a success message from the server
+      // listen to server response
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
