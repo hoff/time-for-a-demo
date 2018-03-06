@@ -63,7 +63,7 @@ flex-col-center-center {
 	cursor: pointer;
 }
 .cm-material-card:hover {
-	transform: scale(1.02);
+	transform: scale(1.015);
 }
 .cm-card-image {
 	transform: scale(1);
@@ -103,13 +103,25 @@ flex-col-center-center {
 	padding-top: 40px;
 	display: block;
 }
+.cm-load-more-button {
+	padding: 20px 40px; 
+	background: #333;
+	color: white;
+	font-size: 20px;
+	margin: 40px;
+	font-weight: 200;
+}
 .cm-material-card-tags {
 	position:absolute; left: 0; bottom:30px; z-index:2;
 }
 .cm-material-card-name {
 	font-size: 16px;
 }
+.mat-form-field {
+	width: 100%;
+}
 .cm-media-bar {
+	box-shadow: rgba(0, 0, 0, 0.12) 0px -2px 4px;
 	z-index: 3; background: white; position: fixed; bottom: 0; left: 0; width: 100vw; height: 200px; padding: 30px; overflow-x: scroll;
 }
 .cm-media-bar-image {

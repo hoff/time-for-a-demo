@@ -53,7 +53,7 @@
         </mat-form-field>
 
         <!-- hidden for un-saved material -->
-        <div *ngIf="material.id">
+        <div *ngIf="material.id" [style.width.%]="100">
 
           <!-- material ID -->
           <mat-form-field class="mc-overlay-formfield">
@@ -87,15 +87,20 @@
   <flex-col [style.width.px]="ui.modalLaneWidthPX">
 
     <!-- large preview image -->
-    <div [style.height.px]="ui.modalLaneWidthPX" [style.width.px]="ui.modalLaneWidthPX" style="background: #333;">
+    <div [style.height.px]="ui.modalLaneWidthPX" [style.width.px]="ui.modalLaneWidthPX" style="background: #333;" [style.margin-bottom.px]="30">
       <img [style.height.px]="ui.modalLaneWidthPX" [style.width.px]="ui.modalLaneWidthPX" [src]="material.imageURL ? material.imageURL + '&w=500&h=500': '/assets/black_placeholder.jpg'" />
     </div>
 
+    <!-- large preview image -->
+    <div [style.height.px]="ui.modalLaneWidthPX" [style.width.px]="ui.modalLaneWidthPX" style="background: #333;">
+      <img [style.height.px]="ui.modalLaneWidthPX" [style.width.px]="ui.modalLaneWidthPX" [src]="material.imageURL ? material.imageURL + '&w=500&h=500': '/assets/black_placeholder.jpg'" style="filter: grayscale(100%);"/>
+    </div>
+
     <!-- image thumbnails -->
-    <flex-row class="cm-modal-thumbnail-row">
+    <!-- <flex-row class="cm-modal-thumbnail-row">
       <img *ngFor="let i of ui.materialDetailModal.thumbCount" [src]="material.imageURL ? material.imageURL+'&w=80&h=80' : '/assets/black_placeholder.jpg'" [style.width.px]="80" [style.height.px]="80"
         style="margin-bottom: 10px;" />
-    </flex-row>
+    </flex-row> -->
 
   </flex-col>
 </flex-row>

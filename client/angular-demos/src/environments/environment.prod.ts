@@ -5,4 +5,4 @@ export const environment = {
   backendDelay: 0,
   public: true,
   assetsURL: '/angular/assets/',
-};
+}

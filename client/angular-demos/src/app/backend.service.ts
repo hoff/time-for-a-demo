@@ -1,6 +1,7 @@
 // ng
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
+import { MatSnackBar } from '@angular/material'
 
 // rx
 import { Subject } from 'rxjs/Subject'
@@ -29,7 +30,8 @@ export class BackendService {
   firstPageLoaded = false
 
   constructor(
-    public http: HttpClient
+    public http: HttpClient,
+    public snackBar: MatSnackBar,
   ) {
     this.environment = environment
   }
@@ -63,8 +65,7 @@ export class BackendService {
     this.http.post(this.apiURL + 'materials', materialData)
     .pipe(delay(this.backendDelay))
     .subscribe(reply => {
-      // material has been saved
-      console.log('material has been saved')
+      this.snackBar.open('The material has been saved.', '', {duration: 2000})
     })
   }
 
@@ -73,7 +74,7 @@ export class BackendService {
     this.http.put(this.apiURL + 'materials', materialData)
     .pipe(delay(this.backendDelay))
     .subscribe((reply: any) => {
-      console.log('created material')
+      this.snackBar.open('The material has been created.', '', {duration: 2000})
     })
   }
 

@@ -7,6 +7,8 @@
     <inline-block class="filter-label" (click)="applyFilter('Image Processing')" [class.selected]="state.materials.filter=='Image Processing'">Image Processing</inline-block>
     <inline-block class="filter-label" (click)="applyFilter('Shading')" [class.selected]="state.materials.filter=='Shading'">Shading</inline-block>
     <inline-block class="filter-label" (click)="applyFilter('Completed')" [class.selected]="state.materials.filter=='Completed'">Completed</inline-block> 
+  
+    <mat-checkbox style="margin-left: 100px; display: flex; font-size: 14px; color: gray; align-items: center;" [(ngModel)]="state.flags.infinityScroll">Infinite Scroll</mat-checkbox>
   </flex-row>
 </flex-row-center>
 
@@ -14,13 +16,14 @@
 <app-content-width class="cm-grid-content row">
     <div class="row">
       <!-- a material card for each result -->
-      <app-responsive-card 
+      <app-responsive-card #card
         *ngFor="let material of backend.materials" 
+        [@fadeInOut]
         class="cm-material-card col-xs-12 col-sm-6 col-md-4 col-lg-3"
         (click)="selectMaterial(material)"
       >
         <relative-block>
-            <img class="cm-card-image" mat-card-image [src]="material.imageURL ? material.imageURL + '&w=300&h=300' : backend.placeholderImg()" alt="Photo of {{ material.name }}">
+            <img #img [style.height.px]="+img.scrollWidth" class="cm-card-image" mat-card-image [src]="material.imageURL ? material.imageURL + '&w=300&h=300' : backend.placeholderImg()" alt="Photo of {{ material.name }}">
             <flex-row class="cm-material-card-tags">
                 <mat-chip-list>
                   <mat-chip *ngFor="let tag of material.tags">{{ tag }}</mat-chip>
@@ -34,7 +37,7 @@
 
 <!-- load more button -->
 <flex-row-center>
-  <button #nextButton [style.display]="!backend.materialsLoading && backend.moreMaterials && !state.flags.infinityScroll ? 'block' : 'none'" (click)="backend.loadMaterialsPage(this.state.materials.filter)">load more materials</button>
+  <button #nextButton class="cm-load-more-button" [style.display]="!backend.materialsLoading && backend.moreMaterials && !state.flags.infinityScroll ? 'block' : 'none'" (click)="backend.loadMaterialsPage(this.state.materials.filter)">load more materials</button>
 </flex-row-center>
 
 <!-- add material button -->

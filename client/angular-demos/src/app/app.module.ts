@@ -4,6 +4,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpClientModule } from '@angular/common/http'
 import { RouterModule, Routes } from '@angular/router'
+import { FormsModule } from '@angular/forms'
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -17,6 +18,7 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatChipsModule,
+  MatSnackBarModule,
 } from '@angular/material'
 
 // app services
@@ -72,6 +74,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
@@ -85,6 +88,7 @@ const appRoutes: Routes = [
     MatDatepickerModule,
     MatNativeDateModule,
     MatChipsModule,
+    MatSnackBarModule,
   ],
   providers: [
     BackendService,

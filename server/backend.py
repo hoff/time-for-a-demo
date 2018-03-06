@@ -113,7 +113,7 @@ class MaterialsEndpoint(webapp2.RequestHandler):
     def put(self):
         allow_cors(self)
         data = json.loads(self.request.body)
-        material = MaterialModel(
+        material_key = MaterialModel(
             name = data.get('name'),
             description = data.get('description'),
             imageURL = data.get('imageURL'),
@@ -122,6 +122,7 @@ class MaterialsEndpoint(webapp2.RequestHandler):
             customer = data.get('customer'),
             tags = data.get('tags')
         ).put()
+        material = material_key.get()
         return_json(self, material_to_object(material))
 
     def options(self):

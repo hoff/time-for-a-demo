@@ -1,6 +1,7 @@
 // ng
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit, AfterViewInit, AfterContentInit, ViewChild, ElementRef } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
+import { MatSnackBar } from '@angular/material'
 
 // rx
 import 'rxjs/add/operator/filter'
@@ -9,6 +10,7 @@ import 'rxjs/add/operator/filter'
 import { BackendService } from '../backend.service'
 import { StateService } from '../state.service'
 import { UIService } from '../ui.service'
+import { animations } from '../animations'
 import { Material } from '../interfaces'
 
 
@@ -16,8 +18,11 @@ import { Material } from '../interfaces'
   selector: 'app-materials-page',
   templateUrl: './materials-page.component.html',
   styleUrls: ['./materials-page.component.css'],
+  animations: [
+    animations.fadeInOut,
+  ]
 })
-export class MaterialsPageComponent implements OnInit {
+export class MaterialsPageComponent implements OnInit, AfterViewInit, AfterContentInit {
 
   @ViewChild('nextButton') nextButton: ElementRef
 
@@ -28,6 +33,7 @@ export class MaterialsPageComponent implements OnInit {
     // ng
     public router: Router,
     public route: ActivatedRoute,
+    public snackBar: MatSnackBar,
     // app
     public backend: BackendService,
     public state: StateService,
@@ -54,10 +60,6 @@ export class MaterialsPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    // initial loading
-    this.backend.loadMaterialsPage(this.state.materials.filter)
-    this.backend.loadImages()
-
     // open material in modal if ID is present in current route
     this.route.params.take(1).subscribe(params => {
       const param = params.param
@@ -67,6 +69,17 @@ export class MaterialsPageComponent implements OnInit {
           this.selectMaterial(reply)
         })
    })
+  }
+
+  ngAfterViewInit() {
+  }
+
+  ngAfterContentInit() {
+    setTimeout(() => {
+      // initial loading
+      this.backend.loadMaterialsPage(this.state.materials.filter)
+      this.backend.loadImages()
+    }, 0)
   }
 
   selectMaterial(material: Material) {
