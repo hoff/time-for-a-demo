@@ -47,12 +47,11 @@ flex-col-center-center {
 	align-items: center;
 }
 
-/** app component */
+/** c|m app styles */
 
 .cm-demo-placeholder {
   padding-top: 50px;
 }
-
 .cm-auth-page {
   position: fixed;
   height: 100%;
@@ -63,7 +62,6 @@ flex-col-center-center {
   align-items: center;
   background: white;
 }
-
 .cm-nav-item {
 	padding: 15px;
 	color: #ccc;
@@ -86,14 +84,13 @@ flex-col-center-center {
 	transform: scale(1);
 	transition: all 0.3s;
 }
-
-.filter-label {
+.cm-filter-label {
 	font-size: 14px;
 	color: gray;
 	padding: 10px 20px;
 	cursor: pointer;
 }
-.filter-label.selected {
+.cm-filter-label.selected {
 	border-bottom: 1px solid #8bacdc;
 	color: #8bacdc;
 }
@@ -154,7 +151,13 @@ flex-col-center-center {
 .cm-media-bar-image {
 	width: 200px; height: 200px; margin-right: 20px;
 }
-input.nameInput {
+.cm-overlay {
+  padding: 40px 0; overflow-y: scroll; z-index: 3; background-color: rgba(0, 0, 0, 0.8); position:fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+}
+.cm-overlay-content {
+  margin: 0px auto; box-sizing: border-box; margin-top: 40px; margin-bottom: 400px;  width: 100%; background: white; position: relative;
+}
+input.cm-name-input {
 	font-weight: bold;
 	font-size: 20px;
 }

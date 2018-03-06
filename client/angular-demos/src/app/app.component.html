@@ -3,19 +3,18 @@
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
 
-<!-- AUTHENTICATION -->
-<div class="cm-auth-page" *ngIf="!backend.authenticated" [@fadeInOut]>
-    <div style="width: 300px;">
+<!-- AUTHENTICATION OVERLAY-->
+<div class="cm-auth-page" *ngIf="!backend.authenticated" [@fadeInOut] (keyup.enter)="backend.authenticate(backend.token)">
+    <div style="width: 300px;" >
       <mat-form-field>
-          <input [(ngModel)]="backend.token" autofocus matInput placeholder="token" value="" type="password">
+        <input [(ngModel)]="backend.token" autocomplete="off" autofocus matInput placeholder="token" value="" type="password">
       </mat-form-field>
-      <button mat-raised-button style="width: 100%;" (click)="backend.authenticate()">log in</button>
+      <button  #login type="submit" mat-raised-button style="width: 100%;" (click)="backend.authenticate(backend.token)">log in</button>
     </div>
 </div>
 
 
 <div *ngIf="backend.authenticated">
-
 <!-- HEADER -->
 <header>
   <flex-row class="cm-header-bar">
@@ -37,7 +36,7 @@
 </div>
 
 <!-- MEDIA BAR -->
-<flex-row class="cm-media-bar" *ngIf="mediaBar">
+<flex-row class="cm-media-bar" *ngIf="ui.mediaBarShown">
   <app-file-drop [size]="200"></app-file-drop>
   <img *ngFor="let image of backend.images" [src]="image.url + '&w=200&h=200'" (click)="ui.boardcastImageClick(image.url)"
     style="margin-right: 20px;" />
@@ -47,7 +46,7 @@
 <footer class="cm-footer">
   <app-content-width>
     <flex-row-center (click)="backend.materialOptions.allowAdding = true">
-      Demo App by Martin Micklinghoff
+       a demo by martin micklinghoff |&nbsp;<span style="text-decoration: underline;" (click)="backend.logout()">log out</span>
     </flex-row-center>
   </app-content-width>
 </footer>

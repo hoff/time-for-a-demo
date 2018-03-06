@@ -21,11 +21,11 @@ import { Material } from '../interfaces'
     animations.fadeInOut,
   ]
 })
-export class MaterialsPageComponent implements OnInit, AfterViewInit, AfterContentInit {
+export class MaterialsPageComponent implements OnInit {
 
   @ViewChild('nextButton') nextButton: ElementRef
 
-  mediaBar = false
+  // the material to be shown in the details overlay
   selectedMaterial: Material
 
   constructor(
@@ -38,6 +38,23 @@ export class MaterialsPageComponent implements OnInit, AfterViewInit, AfterConte
     public ui: UIService,
   ) {
     // infinity scroll mechanism
+    this.setupInfiniteScroll()
+
+    // shortcut subscriptions
+    this.ui.shortcutStream.filter(val => val === 'esc').subscribe(() => {
+      this.closeModal()
+    })
+    // listen to image clicks
+    this.ui.imageClickStream.subscribe(url => {
+      this.selectedMaterial.imageURL = url
+    })
+  }
+
+  /**
+   * creates an infinite-scroll mechansism
+   * by attaching logic to the window's onscoll event
+   */
+  setupInfiniteScroll() {
     window.onscroll = () => {
       if (!this.backend.flags.infinityScroll) { return }
       const buttonFromTop = this.nextButton.nativeElement.getBoundingClientRect().top
@@ -46,19 +63,16 @@ export class MaterialsPageComponent implements OnInit, AfterViewInit, AfterConte
         this.backend.loadMaterialsPage(this.backend.materialOptions.filter)
       }
     }
-    this.ui.shortcutStream.filter(val => val === 'esc').subscribe(() => {
-      this.closeModal()
-    })
-    this.ui.shortcutStream.filter(val => val === 'm').subscribe(() => {
-      this.mediaBar = !this.mediaBar
-    })
-    this.ui.imageClickStream.subscribe(url => {
-      this.selectedMaterial.imageURL = url
-    })
   }
 
   ngOnInit() {
-    // open material in modal if ID is present in current route
+    // initial loading
+    setTimeout(() => {
+      this.backend.loadMaterialsPage(this.backend.materialOptions.filter)
+      this.backend.loadImages()
+    }, 0)
+
+    // stateful dialog: open material in modal if ID is present in current route
     this.route.params.take(1).subscribe(params => {
       const param = params.param
       if (param === 'list') { return }
@@ -67,17 +81,6 @@ export class MaterialsPageComponent implements OnInit, AfterViewInit, AfterConte
           this.selectMaterial(reply)
         })
    })
-  }
-
-  ngAfterViewInit() {
-  }
-
-  ngAfterContentInit() {
-    setTimeout(() => {
-      // initial loading
-      this.backend.loadMaterialsPage(this.backend.materialOptions.filter)
-      this.backend.loadImages()
-    }, 0)
   }
 
   selectMaterial(material: Material) {

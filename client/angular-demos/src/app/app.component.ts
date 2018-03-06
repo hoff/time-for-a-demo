@@ -21,7 +21,6 @@ import { animations } from './animations'
 })
 export class AppComponent implements OnInit {
 
-  mediaBar = false
   environment
 
   navItems = [
@@ -38,9 +37,6 @@ export class AppComponent implements OnInit {
     public ui: UIService,
   ) {
     this.environment = environment
-    this.ui.shortcutStream.filter(val => val === 'm').subscribe(() => {
-      this.mediaBar = !this.mediaBar
-    })
   }
 
   ngOnInit() {

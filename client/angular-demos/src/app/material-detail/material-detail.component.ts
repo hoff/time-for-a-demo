@@ -16,6 +16,7 @@ import { Material } from '../interfaces'
 })
 export class MaterialDetailComponent implements OnInit {
 
+  // the material shown
   @Input('material') material: Material
 
   // tags settings
@@ -33,11 +34,14 @@ export class MaterialDetailComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * updates a material attribute
+   */
   setAttribute(name: string, value: string) {
     this.material[name] = value
   }
 
-  // tags
+  // add tags
   add(event: MatChipInputEvent): void {
     const input = event.input
     const value = event.value
@@ -52,11 +56,11 @@ export class MaterialDetailComponent implements OnInit {
     }
   }
 
+  // remove tags
   remove(tag: any): void {
     const index = this.material.tags.indexOf(tag)
     if (index >= 0) {
       this.material.tags.splice(index, 1)
     }
   }
-
 }

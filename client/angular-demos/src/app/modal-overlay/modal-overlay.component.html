@@ -1,21 +1,25 @@
-<!-- modal overlay -->
-<flex-row-center [@fadeInOut] (click)="close.next()" style="overflow-y: scroll; z-index: 3; background-color: rgba(0, 0, 0, 0.8); position:fixed; top: 0; left: 0; width: 100vw; height: 100vh;">
+<!-- OVERLAY -->
+<div [@fadeInOut] (click)="close.next()" class="cm-overlay">
 
-    <!-- content on white -->
+    <!-- OVERLAY CONTENT -->
     <div 
-      #container
+      class="cm-overlay-content"
       (click)="$event.stopPropagation()"
       [style.max-width.px]="ui.modalWidthPX"
       [style.padding.px]="ui.modalPaddingPX"
-      [style.height.px]="+container.scrollHeight"
-      style="box-sizing: border-box; margin-top: 40px; margin-bottom: 400px;  width: 100%; background: white; position: relative; " >
-      <!-- x close button --> 
+    >
+      
+      <!-- CLOSE --> 
       <flex-col-center-center style="width: 50px; height: 50px; cursor: pointer; position: absolute; top: 0px; right: 0px;" (click)="close.next()">
           <i class="material-icons" style="font-size: 40px; color: lightgray;">clear</i>
       </flex-col-center-center>
       
+      <!-- CONTENT -->
       <ng-content></ng-content>
   
     </div>
+
+    <!-- just space -->
+    <div [style.height.px]="400"></div>
   
-  </flex-row-center>
+  </div>

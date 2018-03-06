@@ -12,34 +12,40 @@ import { delay } from 'rxjs/operators/delay'
 // app
 import { environment } from '../environments/environment'
 
-
+/**
+ * This service is responsive for communicating
+ * with the app's RESTful backend service
+ */
 @Injectable()
 export class BackendService {
 
+  // app environment
   environment
   authenticated = false
+  token
   assetsURL = environment.assetsURL
-
   backendHost = environment.backendHost
   apiURL = this.backendHost + '/api/'
   backendDelay = environment.backendDelay
 
+  // content state
   materials = []
   images = []
   moreMaterials = false
   materialsLoading = false
   nextMaterialsCursor: string
   firstPageLoaded = false
-  token
-
-  flags = {
-    infinityScroll: true
-  }
-
+  flags = { infinityScroll: true }
   materialOptions = {
     filter: 'All',
-    states: [
+    filters: [
       'All',
+      'Scanning',
+      'Image Processing',
+      'Shading',
+      'Completed',
+    ],
+    states: [
       'New',
       'Scanning',
       'Image Processing',
@@ -59,13 +65,12 @@ export class BackendService {
     public router: Router,
   ) {
     this.environment = environment
+    this.authenticate(localStorage.getItem('token'))
   }
 
-  // move to ui
-  placeholderImg() {
-    return this.assetsURL + 'black_placeholder.jpg'
-  }
-
+  /**
+   * loads the first or next results page from matrial, with a given filter
+   */
   loadMaterialsPage(filter: string) {
     if (this.materialsLoading || (!this.moreMaterials && this.firstPageLoaded )) { return }
     this.materialsLoading = true
@@ -80,11 +85,17 @@ export class BackendService {
       })
   }
 
+  /**
+   * load a material from a givenID
+   */
   loadMaterialById(id) {
     return this.http.get(this.apiURL + 'material?id=' + id)
       .pipe(delay(this.backendDelay))
   }
 
+  /**
+   * sends an update-material request to the backend
+   */
   saveMaterial(material) {
     const materialData = this.materialToObject(material)
     this.http.post(this.apiURL + 'materials', materialData)
@@ -94,6 +105,9 @@ export class BackendService {
     })
   }
 
+  /**
+   * sends a create-material request to the backend
+   */
   createMaterial(material) {
     const materialData = this.materialToObject(material)
     this.http.put(this.apiURL + 'materials', materialData)
@@ -103,7 +117,9 @@ export class BackendService {
     })
   }
 
-  // load images
+  /**
+   * loads user images
+   */
   loadImages() {
     this.http.get(this.apiURL + 'images')
       .pipe(delay(this.backendDelay))
@@ -112,6 +128,10 @@ export class BackendService {
       })
   }
 
+  /**
+   * converts a material object to a data object
+   * for backend communication
+   */
   materialToObject(material) {
     return {
       id: material.id,
@@ -155,13 +175,35 @@ export class BackendService {
     })
   }
 
-  authenticate() {
-    this.authenticated = this.hashCode2(this.token) === -1884257769
+  // move to ui
+  placeholderImg() {
+    return this.assetsURL + 'black_placeholder.jpg'
+  }
+
+  /**
+   * simple authentication
+   */
+  authenticate(token: string) {
+    if (!token) { return }
+    const hash = '-1884257769'
+    this.authenticated = this.hashCode2(token) === hash
     if (this.authenticated) {
-      this.router.navigate(['/materials/list'])
+      localStorage.setItem('token', token)
+      // this.router.navigate(['/materials/list'])
     }
   }
 
+  /**
+   * logout for simple authentication
+   */
+  logout() {
+    localStorage.removeItem('token')
+    this.authenticated = false
+  }
+
+  /**
+   * simple hashing function
+   */
  hashCode2(str) {
     let hash = 0
     if (str.length === 0) { return hash }
@@ -170,7 +212,7 @@ export class BackendService {
       hash = ((hash << 5) - hash) + char
       hash = hash & hash
     }
-    return hash
+    return hash + ''
   }
 
 }
