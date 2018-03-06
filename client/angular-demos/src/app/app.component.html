@@ -1,41 +1,43 @@
-<!-- loading indicator -->
+<!-- LOADING INDICATOR -->
 <div *ngIf="backend.materialsLoading" class="cm-loading-indicator">
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
 
-<!-- header --> 
-<flex-row class="cm-header-bar">
+<!-- HEADER -->
+<header>
+  <flex-row class="cm-header-bar">
     <app-content-width>
-        <flex-row-start-center>
-            <img class="cm-header-logo" [src]="environment.production ? '/angular/assets/colormass-logo-cm.png' : '/assets/colormass-logo-cm.png'" [routerLink]="['/']" height="30" alt="color|mass logo" >
-            <div class="cm-nav-item" [routerLink]="['models']" routerLinkActive="active">Models</div>
-            <div class="cm-nav-item" [routerLink]="['materials', 'list']" routerLinkActive="active">Materials</div>
-            <div class="cm-nav-item" [routerLink]="['images']" routerLinkActive="active">Images</div>
-            <div class="cm-nav-item" [routerLink]="['users']" routerLinkActive="active">Users</div>
-            <div class="cm-nav-item" [routerLink]="['customers']" routerLinkActive="active">Customers</div>
-            <div class="cm-nav-item" [routerLink]="['tags']" routerLinkActive="active">Tags</div>
-          </flex-row-start-center>
+      <flex-row-start-center>
+        <img class="cm-header-logo" [src]="environment.production ? '/angular/assets/colormass-logo-cm.png' : '/assets/colormass-logo-cm.png'"
+          [routerLink]="['/']" height="30" alt="color|mass logo">
+        <div class="cm-nav-item" [routerLink]="['models']" routerLinkActive="active">Models</div>
+        <div class="cm-nav-item" [routerLink]="['materials', 'list']" routerLinkActive="active">Materials</div>
+        <div class="cm-nav-item" [routerLink]="['images']" routerLinkActive="active">Images</div>
+        <div class="cm-nav-item" [routerLink]="['users']" routerLinkActive="active">Users</div>
+        <div class="cm-nav-item" [routerLink]="['customers']" routerLinkActive="active">Customers</div>
+        <div class="cm-nav-item" [routerLink]="['tags']" routerLinkActive="active">Tags</div>
+      </flex-row-start-center>
     </app-content-width>
-</flex-row>
+  </flex-row>
+</header>
 
-<!-- content via router outlet-->
+<!-- ROUTER OUTLET -->
 <div class="cm-content-area">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>
 
-<!-- media bar -->
-<flex-row class="cm-media-bar" [style.display]="mediaBar ? 'flex' : 'none'">
+<!-- MEDIA BAR -->
+<flex-row class="cm-media-bar" *ngIf="mediaBar">
   <app-file-drop [size]="200"></app-file-drop>
-  <img 
-    *ngFor="let image of backend.images" 
-    [src]="image.url + '&w=200&h=200'" 
-    (click)="ui.boardcastImageClick(image.url)" 
-    style="margin-right: 20px;"
-  />
+  <img *ngFor="let image of backend.images" [src]="image.url + '&w=200&h=200'" (click)="ui.boardcastImageClick(image.url)"
+    style="margin-right: 20px;" />
 </flex-row>
 
+<!-- FOOTER -->
 <footer class="cm-footer">
   <app-content-width>
-    Demo App by Martin Micklinghoff
+    <flex-row-center (click)="backend.materialOptions.allowAdding = true">
+      Demo App by Martin Micklinghoff
+    </flex-row-center>
   </app-content-width>
 </footer>

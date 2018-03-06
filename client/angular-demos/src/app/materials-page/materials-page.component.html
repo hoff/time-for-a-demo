@@ -1,27 +1,19 @@
-<!-- material filters -->
-<flex-row-center style="width: 100%; align-items: center; padding-top: 10px;">
-  <flex-row [style.max-width.px]="ui.contentWidthPX" style="width: 100%;">
-    <inline-block class="filter-label" (click)="applyFilter('All')" [class.selected]="backend.materialOptions.filter=='All'">All</inline-block>
-    <inline-block class="filter-label" (click)="applyFilter('New')" [class.selected]="backend.materialOptions.filter=='New'">New</inline-block>
-    <inline-block class="filter-label" (click)="applyFilter('Scanning')" [class.selected]="backend.materialOptions.filter=='Scanning'">Scanning</inline-block>
-    <inline-block class="filter-label" (click)="applyFilter('Image Processing')" [class.selected]="backend.materialOptions.filter=='Image Processing'">Image Processing</inline-block>
-    <inline-block class="filter-label" (click)="applyFilter('Shading')" [class.selected]="backend.materialOptions.filter=='Shading'">Shading</inline-block>
-    <inline-block class="filter-label" (click)="applyFilter('Completed')" [class.selected]="backend.materialOptions.filter=='Completed'">Completed</inline-block> 
-  
-    <mat-checkbox style="margin-left: 100px; display: flex; font-size: 14px; color: gray; align-items: center;" [(ngModel)]="backend.flags.infinityScroll">Infinite Scroll</mat-checkbox>
-  </flex-row>
-</flex-row-center>
+<!-- FILTERS -->
+<app-content-width class="cm-filter-row">
+    <inline-block *ngFor="let filter of backend.materialOptions.states" class="filter-label" (click)="applyFilter(filter)" [class.selected]="backend.materialOptions.filter == filter">
+        {{ filter }}
+      </inline-block>
+      <mat-checkbox style="display: inline-block; margin-left: 100px; font-size: 14px; color: gray; align-items: center;" [(ngModel)]="backend.flags.infinityScroll">Infinite Scroll</mat-checkbox>
+</app-content-width>
 
-<!-- material cards on responsive grid -->
+
+<!--GRID -->
 <app-content-width class="cm-grid-content row">
     <div class="row">
-      <!-- a material card for each result -->
-      <app-responsive-card #card
-        *ngFor="let material of backend.materials" 
-        [@fadeInOut]
+      <!-- CARD -->
+      <app-responsive-card #card *ngFor="let material of backend.materials" [@fadeInOut] 
         class="cm-material-card col-xs-12 col-sm-6 col-md-4 col-lg-3"
-        (click)="selectMaterial(material)"
-      >
+        (click)="selectMaterial(material)">
         <relative-block>
             <img #img [style.height.px]="+img.scrollWidth" class="cm-card-image" mat-card-image [src]="material.imageURL ? material.imageURL + '&w=300&h=300' : backend.placeholderImg()" alt="Photo of {{ material.name }}">
             <flex-row class="cm-material-card-tags">
@@ -32,22 +24,26 @@
           </relative-block>
           <flex-row-center class="cm-material-card-name">{{ material.name }}</flex-row-center>
       </app-responsive-card>
+      <!-- END OF CARD -->
   </div>
 </app-content-width>
 
-<!-- load more button -->
+
+<!-- LOAD MORE -->
 <flex-row-center>
   <button #nextButton class="cm-load-more-button" [style.opacity]="!backend.materialsLoading && backend.moreMaterials && !backend.flags.infinityScroll ? 1 : 0" (click)="backend.loadMaterialsPage(this.backend.materialOptions.filter)">load more materials</button>
 </flex-row-center>
 
-<!-- add material button -->
-<div style="position: fixed; bottom: 20px; right: 20px;">
+
+<!-- MATERIAL DETAIL OVERLY -->
+<app-modal-overlay *ngIf="selectedMaterial" (close)="closeModal()">
+  <app-material-detail [material]="selectedMaterial"></app-material-detail>
+</app-modal-overlay>
+
+
+<!-- ADD MATERIAL -->
+<div *ngIf="backend.materialOptions.allowAdding" style="position: fixed; bottom: 20px; right: 20px;">
     <button mat-fab color="primary" (click)="startMaterial()">
         <span style="font-size: 40px; color: white;">+</span>
     </button>
 </div>
-
-<!-- material detail inside modal overlay -->
-<app-modal-overlay *ngIf="selectedMaterial" (close)="closeModal()">
-  <app-material-detail [material]="selectedMaterial"></app-material-detail>
-</app-modal-overlay>

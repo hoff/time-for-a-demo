@@ -37,6 +37,7 @@ export class BackendService {
     // current filter
     filter: 'All',
     states: [
+      'All',
       'New',
       'Scanning',
       'Image Processing',
@@ -46,7 +47,8 @@ export class BackendService {
     customers: [
       'JOOP!',
       'Rolf Benz',
-    ]
+    ],
+    allowAdding: false
   }
 
   constructor(

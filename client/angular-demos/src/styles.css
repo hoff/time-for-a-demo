@@ -4,7 +4,7 @@
 html, body {
 	margin: 0;
 	padding: 0;
-	font-family: 'Open Sans', sans-serif;
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
 	background: #3e454d;
 }
 
@@ -53,7 +53,8 @@ flex-col-center-center {
 	padding: 15px;
 	color: #ccc;
 	outline: none;
-	cursor: pointer;
+  cursor: pointer;
+  font-size: 18px;
 }
 .cm-nav-item.active {
 	color: white;
@@ -101,7 +102,9 @@ flex-col-center-center {
 }
 .cm-footer {
 	background-color: #3e454d; padding: 40px 0px;
-	color: #ddd;
+  color: #ddd;
+  font-weight: lighter;
+  font-size: 12px;
 }
 .cm-grid-content {
 	padding-top: 40px;
@@ -119,7 +122,11 @@ flex-col-center-center {
 	position:absolute; left: 0; bottom:30px; z-index:2;
 }
 .cm-material-card-name {
-	font-size: 16px;
+  font-size: 16px;
+  
+}
+.cm-filter-row {
+  padding-top: 20px;
 }
 .mat-form-field {
 	width: 100%;
