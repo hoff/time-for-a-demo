@@ -49,12 +49,28 @@ flex-col-center-center {
 
 /** app component */
 
+.cm-demo-placeholder {
+  padding-top: 50px;
+}
+
+.cm-auth-page {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: white;
+}
+
 .cm-nav-item {
 	padding: 15px;
 	color: #ccc;
 	outline: none;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 200;
 }
 .cm-nav-item.active {
 	color: white;
@@ -122,8 +138,8 @@ flex-col-center-center {
 	position:absolute; left: 0; bottom:30px; z-index:2;
 }
 .cm-material-card-name {
-  font-size: 16px;
-  
+  font-size: 14px;
+  color: #333;
 }
 .cm-filter-row {
   padding-top: 20px;

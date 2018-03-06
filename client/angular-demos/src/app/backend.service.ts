@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { MatSnackBar } from '@angular/material'
+import { Router } from '@angular/router'
 
 // rx
 import { Subject } from 'rxjs/Subject'
@@ -16,6 +17,7 @@ import { environment } from '../environments/environment'
 export class BackendService {
 
   environment
+  authenticated = false
   assetsURL = environment.assetsURL
 
   backendHost = environment.backendHost
@@ -28,13 +30,13 @@ export class BackendService {
   materialsLoading = false
   nextMaterialsCursor: string
   firstPageLoaded = false
+  token
 
   flags = {
     infinityScroll: true
   }
 
   materialOptions = {
-    // current filter
     filter: 'All',
     states: [
       'All',
@@ -54,6 +56,7 @@ export class BackendService {
   constructor(
     public http: HttpClient,
     public snackBar: MatSnackBar,
+    public router: Router,
   ) {
     this.environment = environment
   }
@@ -151,4 +154,23 @@ export class BackendService {
       })
     })
   }
+
+  authenticate() {
+    this.authenticated = this.hashCode2(this.token) === -1884257769
+    if (this.authenticated) {
+      this.router.navigate(['/materials/list'])
+    }
+  }
+
+ hashCode2(str) {
+    let hash = 0
+    if (str.length === 0) { return hash }
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i)
+      hash = ((hash << 5) - hash) + char
+      hash = hash & hash
+    }
+    return hash
+  }
+
 }

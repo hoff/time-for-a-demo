@@ -3,19 +3,29 @@
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
 
+<!-- AUTHENTICATION -->
+<div class="cm-auth-page" *ngIf="!backend.authenticated" [@fadeInOut]>
+    <div style="width: 300px;">
+      <mat-form-field>
+          <input [(ngModel)]="backend.token" autofocus matInput placeholder="token" value="" type="password">
+      </mat-form-field>
+      <button mat-raised-button style="width: 100%;" (click)="backend.authenticate()">log in</button>
+    </div>
+</div>
+
+
+<div *ngIf="backend.authenticated">
+
 <!-- HEADER -->
 <header>
   <flex-row class="cm-header-bar">
     <app-content-width>
       <flex-row-start-center>
-        <img class="cm-header-logo" [src]="environment.production ? '/angular/assets/colormass-logo-cm.png' : '/assets/colormass-logo-cm.png'"
+        <img class="cm-header-logo" 
+          [src]="environment.production ? '/angular/assets/colormass-logo-cm.png' : '/assets/colormass-logo-cm.png'"
           [routerLink]="['/']" height="30" alt="color|mass logo">
-        <div class="cm-nav-item" [routerLink]="['models']" routerLinkActive="active">Models</div>
-        <div class="cm-nav-item" [routerLink]="['materials', 'list']" routerLinkActive="active">Materials</div>
-        <div class="cm-nav-item" [routerLink]="['images']" routerLinkActive="active">Images</div>
-        <div class="cm-nav-item" [routerLink]="['users']" routerLinkActive="active">Users</div>
-        <div class="cm-nav-item" [routerLink]="['customers']" routerLinkActive="active">Customers</div>
-        <div class="cm-nav-item" [routerLink]="['tags']" routerLinkActive="active">Tags</div>
+          <!-- nav links -->
+          <div *ngFor="let item of navItems" class="cm-nav-item" [routerLink]="item.link" routerLinkActive="active">{{ item.name }}</div>
       </flex-row-start-center>
     </app-content-width>
   </flex-row>
@@ -41,3 +51,5 @@
     </flex-row-center>
   </app-content-width>
 </footer>
+
+</div>

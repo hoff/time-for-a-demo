@@ -45,12 +45,12 @@ import { ResponsiveCardComponent } from './responsive-card/responsive-card.compo
 // routes
 const appRoutes: Routes = [
   { path: '', component: HomePageComponent },
-  { path: 'models', component: ModelsPageComponent },
+  { path: 'models/:param', component: ModelsPageComponent },
   { path: 'materials/:param', component: MaterialsPageComponent},
-  { path: 'images', component: ImagesPageComponent },
-  { path: 'users', component: UsersPageComponent },
-  { path: 'customers', component: CustomersPageComponent },
-  { path: 'tags', component: TagsPageComponent },
+  { path: 'images/:param', component: ImagesPageComponent },
+  { path: 'users/:param', component: UsersPageComponent },
+  { path: 'customers/:param', component: CustomersPageComponent },
+  { path: 'tags/:param', component: TagsPageComponent },
 ]
 
 @NgModule({
