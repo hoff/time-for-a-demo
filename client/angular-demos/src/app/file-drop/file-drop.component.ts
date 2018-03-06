@@ -47,7 +47,6 @@ export class FileDropComponent {
     } else {
       files = $event.target.files
     }
-    // this.state.setOverlay({visible: true, message: `uploading ${files.length} images!`, origin: 'file drop started'})
     new Observable(stream => {
       for (const file of files) {
 

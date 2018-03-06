@@ -1,14 +1,14 @@
 <!-- material filters -->
 <flex-row-center style="width: 100%; align-items: center; padding-top: 10px;">
   <flex-row [style.max-width.px]="ui.contentWidthPX" style="width: 100%;">
-    <inline-block class="filter-label" (click)="applyFilter('All')" [class.selected]="state.materials.filter=='All'">All</inline-block>
-    <inline-block class="filter-label" (click)="applyFilter('New')" [class.selected]="state.materials.filter=='New'">New</inline-block>
-    <inline-block class="filter-label" (click)="applyFilter('Scanning')" [class.selected]="state.materials.filter=='Scanning'">Scanning</inline-block>
-    <inline-block class="filter-label" (click)="applyFilter('Image Processing')" [class.selected]="state.materials.filter=='Image Processing'">Image Processing</inline-block>
-    <inline-block class="filter-label" (click)="applyFilter('Shading')" [class.selected]="state.materials.filter=='Shading'">Shading</inline-block>
-    <inline-block class="filter-label" (click)="applyFilter('Completed')" [class.selected]="state.materials.filter=='Completed'">Completed</inline-block> 
+    <inline-block class="filter-label" (click)="applyFilter('All')" [class.selected]="backend.materialOptions.filter=='All'">All</inline-block>
+    <inline-block class="filter-label" (click)="applyFilter('New')" [class.selected]="backend.materialOptions.filter=='New'">New</inline-block>
+    <inline-block class="filter-label" (click)="applyFilter('Scanning')" [class.selected]="backend.materialOptions.filter=='Scanning'">Scanning</inline-block>
+    <inline-block class="filter-label" (click)="applyFilter('Image Processing')" [class.selected]="backend.materialOptions.filter=='Image Processing'">Image Processing</inline-block>
+    <inline-block class="filter-label" (click)="applyFilter('Shading')" [class.selected]="backend.materialOptions.filter=='Shading'">Shading</inline-block>
+    <inline-block class="filter-label" (click)="applyFilter('Completed')" [class.selected]="backend.materialOptions.filter=='Completed'">Completed</inline-block> 
   
-    <mat-checkbox style="margin-left: 100px; display: flex; font-size: 14px; color: gray; align-items: center;" [(ngModel)]="state.flags.infinityScroll">Infinite Scroll</mat-checkbox>
+    <mat-checkbox style="margin-left: 100px; display: flex; font-size: 14px; color: gray; align-items: center;" [(ngModel)]="backend.flags.infinityScroll">Infinite Scroll</mat-checkbox>
   </flex-row>
 </flex-row-center>
 
@@ -37,7 +37,7 @@
 
 <!-- load more button -->
 <flex-row-center>
-  <button #nextButton class="cm-load-more-button" [style.display]="!backend.materialsLoading && backend.moreMaterials && !state.flags.infinityScroll ? 'block' : 'none'" (click)="backend.loadMaterialsPage(this.state.materials.filter)">load more materials</button>
+  <button #nextButton class="cm-load-more-button" [style.opacity]="!backend.materialsLoading && backend.moreMaterials && !backend.flags.infinityScroll ? 1 : 0" (click)="backend.loadMaterialsPage(this.backend.materialOptions.filter)">load more materials</button>
 </flex-row-center>
 
 <!-- add material button -->

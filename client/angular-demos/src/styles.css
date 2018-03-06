@@ -99,6 +99,10 @@ flex-col-center-center {
 .cm-header-bar {
 	box-shadow: 0px 4px 5px -1px rgba(0,0,0,0.75); margin-bottom:3px; background-color: #3e454d; padding: 10px 0px; align-items: center; width: 100vw;
 }
+.cm-footer {
+	background-color: #3e454d; padding: 40px 0px;
+	color: #ddd;
+}
 .cm-grid-content {
 	padding-top: 40px;
 	display: block;

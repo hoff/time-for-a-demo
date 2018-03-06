@@ -37,7 +37,7 @@
         <!-- customer -->
         <mat-form-field>
           <mat-select placeholder="Customer" [(value)]="material.customer" (change)="setAttribute('customer', $event.value)">
-            <mat-option *ngFor="let customer of state.materials.customers" [value]="customer">
+            <mat-option *ngFor="let customer of backend.materialOptions.customers" [value]="customer">
               {{ customer }}
             </mat-option>
           </mat-select>
@@ -46,7 +46,7 @@
         <!-- state -->
         <mat-form-field>
           <mat-select placeholder="State" [(value)]="material.state" (change)="setAttribute('state', $event.value)">
-            <mat-option *ngFor="let state of state.materials.states" [value]="state">
+            <mat-option *ngFor="let state of backend.materialOptions.states" [value]="state">
               {{ state }}
             </mat-option>
           </mat-select>

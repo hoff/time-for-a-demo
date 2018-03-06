@@ -23,7 +23,6 @@ import {
 
 // app services
 import { BackendService } from './backend.service'
-import { StateService } from './state.service'
 import { UIService } from './ui.service'
 
 // app routes
@@ -92,7 +91,6 @@ const appRoutes: Routes = [
   ],
   providers: [
     BackendService,
-    StateService,
     UIService,
   ],
   bootstrap: [AppComponent],

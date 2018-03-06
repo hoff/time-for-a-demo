@@ -5,7 +5,6 @@ import {ENTER, COMMA, TAB} from '@angular/cdk/keycodes'
 
 // app
 import { BackendService } from '../backend.service'
-import { StateService } from '../state.service'
 import { UIService } from '../ui.service'
 import { Material } from '../interfaces'
 
@@ -28,7 +27,6 @@ export class MaterialDetailComponent implements OnInit {
 
   constructor(
     public backend: BackendService,
-    public state: StateService,
     public ui: UIService,
   ) { }
 

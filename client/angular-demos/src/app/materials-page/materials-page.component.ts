@@ -8,7 +8,6 @@ import 'rxjs/add/operator/filter'
 
 // app
 import { BackendService } from '../backend.service'
-import { StateService } from '../state.service'
 import { UIService } from '../ui.service'
 import { animations } from '../animations'
 import { Material } from '../interfaces'
@@ -36,16 +35,15 @@ export class MaterialsPageComponent implements OnInit, AfterViewInit, AfterConte
     public snackBar: MatSnackBar,
     // app
     public backend: BackendService,
-    public state: StateService,
     public ui: UIService,
   ) {
     // infinity scroll mechanism
     window.onscroll = () => {
-      if (!state.flags.infinityScroll) { return }
+      if (!this.backend.flags.infinityScroll) { return }
       const buttonFromTop = this.nextButton.nativeElement.getBoundingClientRect().top
       const eagerness = window.innerHeight * 2
       if (buttonFromTop < eagerness) {
-        this.backend.loadMaterialsPage(this.state.materials.filter)
+        this.backend.loadMaterialsPage(this.backend.materialOptions.filter)
       }
     }
     this.ui.shortcutStream.filter(val => val === 'esc').subscribe(() => {
@@ -77,7 +75,7 @@ export class MaterialsPageComponent implements OnInit, AfterViewInit, AfterConte
   ngAfterContentInit() {
     setTimeout(() => {
       // initial loading
-      this.backend.loadMaterialsPage(this.state.materials.filter)
+      this.backend.loadMaterialsPage(this.backend.materialOptions.filter)
       this.backend.loadImages()
     }, 0)
   }
@@ -108,8 +106,8 @@ export class MaterialsPageComponent implements OnInit, AfterViewInit, AfterConte
     this.backend.materials = []
     this.backend.nextMaterialsCursor = ''
     this.backend.firstPageLoaded = false
-    this.state.materials.filter = filter
-    this.backend.loadMaterialsPage(this.state.materials.filter)
+    this.backend.materialOptions.filter = filter
+    this.backend.loadMaterialsPage(this.backend.materialOptions.filter)
   }
 
 }

@@ -29,6 +29,26 @@ export class BackendService {
   nextMaterialsCursor: string
   firstPageLoaded = false
 
+  flags = {
+    infinityScroll: true
+  }
+
+  materialOptions = {
+    // current filter
+    filter: 'All',
+    states: [
+      'New',
+      'Scanning',
+      'Image Processing',
+      'Shading',
+      'Completed',
+    ],
+    customers: [
+      'JOOP!',
+      'Rolf Benz',
+    ]
+  }
+
   constructor(
     public http: HttpClient,
     public snackBar: MatSnackBar,
